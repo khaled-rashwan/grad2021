@@ -1,0 +1,53 @@
+﻿@model IEnumerable<grad2021.Models.StudentEnrollment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LevelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Branch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcademicYear)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch.BranchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.StudentNatId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcademicYear.AcademicYearID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { AcademicYearID = item.AcademicYearID, StudentNatId = item.StudentNatId }) |
+                @Html.ActionLink("Details", "Details", new { AcademicYearID = item.AcademicYearID, StudentNatId = item.StudentNatId }) |
+                @Html.ActionLink("Delete", "Delete", new { AcademicYearID = item.AcademicYearID, StudentNatId = item.StudentNatId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
