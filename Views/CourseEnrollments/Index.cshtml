@@ -13,8 +13,8 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LevelName)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="LevelNameAsc">@Html.DisplayNameFor(model => model.LevelName)</a>
+</th>
             <th>
                 @Html.DisplayNameFor(model => model.Term)
             </th>
@@ -22,8 +22,8 @@
                 @Html.DisplayNameFor(model => model.Course)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Branch)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="branchNameAsc">@Html.DisplayNameFor(model => model.Branch)</a>
+</th>
             <th></th>
         </tr>
     </thead>

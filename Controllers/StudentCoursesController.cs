@@ -18,12 +18,37 @@ namespace grad2021.Controllers
         {
             _context = context;
         }
-
+        
         // GET: StudentCourses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            var applicationDbContext = _context.StudentCourses.Include(s => s.CourseEnrollment).Include(s => s.StudentEnrollment);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["StudentNatId"] = String.IsNullOrEmpty(sortOrder) ? "NatIdAsc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var applicationDbContext = from s in _context.StudentCourses
+                .Include(s => s.CourseEnrollment)
+                .Include(s => s.StudentEnrollment)
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.CourseName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "NatIdAsc":
+                    applicationDbContext = applicationDbContext
+                        .OrderBy(s => s.StudentNatId)
+                        .ThenBy(s=>s.CourseEnrollment.LevelName)
+                        .ThenBy(s=>s.CourseName);
+                    break;
+                default:
+                    applicationDbContext = applicationDbContext.OrderBy(s => s.FinalExamMark);
+                    break;
+            }
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await applicationDbContext.AsNoTracking().ToListAsync());
         }
 
         // GET: StudentCourses/Details/5

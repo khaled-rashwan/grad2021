@@ -13,11 +13,8 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CourseCode)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CourseDescription)
-            </th>
+            </th><!--
             <th>
                 @Html.DisplayNameFor(model => model.LectureWeeklyDuration)
             </th>
@@ -35,9 +32,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TermExamMaxScore)
+            </th> -->
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartmentCode)
+                @Html.DisplayNameFor(model => model.DepartmentCodeValue)
             </th>
             <th></th>
         </tr>
@@ -46,11 +46,8 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CourseCode)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CourseDescription)
-            </td>
+            </td><!--
             <td>
                 @Html.DisplayFor(modelItem => item.LectureWeeklyDuration)
             </td>
@@ -68,6 +65,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TermExamMaxScore)
+            </td> -->
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCode)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DepartmentCode.DepartmentCodeValue)

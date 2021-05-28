@@ -20,7 +20,7 @@ namespace grad2021.Models
         [Display(Name = "تاريخ التعيين أو الترقية")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime PromotionDate { get; set; }
+        public DateTime? PromotionDate { get; set; }
 
 
         public Instructor Instructor { get; set; }

@@ -20,9 +20,29 @@ namespace grad2021.Controllers
         }
 
         // GET: CourseEnrollments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.CourseEnrollments.Include(c => c.Branch).Include(c => c.Course);
+            var applicationDbContext = from s in _context.CourseEnrollments
+                                       .Include(c => c.Branch)
+                                       .Include(c => c.Course)
+                                       select s;
+            switch (sortOrder)
+            {
+                case "LevelNameAsc":
+                    applicationDbContext = applicationDbContext
+                        .OrderBy(s => s.LevelName)
+                        .ThenBy(s=>s.BranchName)
+                        .ThenBy(s => s.Term)
+                        .ThenBy(s => s.CourseName);
+                    break;
+                case "branchNameAsc":
+                    applicationDbContext = applicationDbContext
+                        .OrderBy(s => s.BranchName)
+                        .ThenBy(s => s.LevelName)
+                        .ThenBy(s => s.Term)
+                        .ThenBy(s => s.CourseName);
+                    break;
+            }
             return View(await applicationDbContext.ToListAsync());
         }
 

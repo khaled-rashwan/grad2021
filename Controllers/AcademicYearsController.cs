@@ -179,6 +179,8 @@ namespace grad2021.Controllers
                         studentEnrollment.BranchName = se.Selections.
                             Find(s => s.SelectionNo == 1).SelectionBranchName;
                         branches.Find(s => s.BranchName == studentEnrollment.BranchName).CurrentCapacity += 1;
+                        _context.Update(branches.Find(s => s.BranchName == studentEnrollment.BranchName));
+                        await _context.SaveChangesAsync();
                         int currentCapacity = branches.Find(s => s.BranchName == studentEnrollment.BranchName).CurrentCapacity;
                         int fullCapacity = branches.Find(s => s.BranchName == studentEnrollment.BranchName).FullCapacity;
 
@@ -186,9 +188,13 @@ namespace grad2021.Controllers
                         {
                             selectionCounter++;
                             branches.Find(s => s.BranchName == studentEnrollment.BranchName).CurrentCapacity -= 1;
+                            _context.Update(branches.Find(s => s.BranchName == studentEnrollment.BranchName));
+                            await _context.SaveChangesAsync();
                             studentEnrollment.BranchName = se.Selections.
                                 Find(s => s.SelectionNo == selectionCounter).SelectionBranchName;
                             branches.Find(s => s.BranchName == studentEnrollment.BranchName).CurrentCapacity += 1;
+                            _context.Update(branches.Find(s => s.BranchName == studentEnrollment.BranchName));
+                            await _context.SaveChangesAsync();
                             currentCapacity = branches.Find(s => s.BranchName == studentEnrollment.BranchName).CurrentCapacity;
                         }
                         _context.Add(studentEnrollment);
