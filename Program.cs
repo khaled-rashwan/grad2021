@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore;
 
 namespace grad2021
 {
@@ -17,9 +19,7 @@ namespace grad2021
         {
             //CreateHostBuilder(args).Build().Run();
             var host = CreateHostBuilder(args).Build();
-
             CreateDbIfNotExists(host);
-
             host.Run();
         }
         private static void CreateDbIfNotExists(IHost host)
@@ -44,7 +44,9 @@ namespace grad2021
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+                    var url = $"http://0.0.0.0:{port}";
+                    webBuilder.UseStartup<Startup>().UseUrls(url);
                 });
     }
 }

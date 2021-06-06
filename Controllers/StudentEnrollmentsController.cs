@@ -20,10 +20,22 @@ namespace grad2021.Controllers
         }
 
         // GET: StudentEnrollments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString)
         {
-            var applicationDbContext = _context.StudentEnrollments.Include(s => s.AcademicYear).Include(s => s.Branch).Include(s => s.Student);
-            return View(await applicationDbContext.ToListAsync());
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            int pageSize = 20;
+            var applicationDbContext = from s in _context.StudentEnrollments
+                                       .Include(s => s.AcademicYear)
+                                       .Include(s => s.Branch)
+                                       .Include(s => s.Student)
+                                       select s;
+
+            return View(await PaginatedList<StudentEnrollment>.CreateAsync(applicationDbContext.AsNoTracking(), pageNumber ?? 1, pageSize)); 
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: StudentEnrollments/Details/5
